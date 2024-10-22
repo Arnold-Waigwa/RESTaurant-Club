@@ -1,6 +1,11 @@
 import React from "react";
 
 const Hero = () => {
+  const getCity = async () => {
+    const response = await fetch(
+      `https://api.weatherbit.io/v2.0/current?city=${city}&country=${country}&key=65c865e3b4b04babac177ed0a366368c&include=minutely`
+    );
+  };
   return (
     <div>
       <div>
