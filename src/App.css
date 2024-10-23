@@ -1,42 +1,120 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
   text-align: center;
+  color: #2c3e50;
+  margin-top: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h2 {
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+/* Container for the whole app */
+.App {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Summary Section Styling */
+.summary {
+  background-color: #3498db;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary p {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Search Bar */
+input[type="text"] {
+  padding: 10px;
+  width: 300px;
+  border: 2px solid #2ecc71;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: block;
+  margin: 0 auto;
+}
+
+input[type="text"]::placeholder {
+  color: #95a5a6;
+}
+
+/* Filter Buttons */
+button {
+  padding: 10px 20px;
+  background-color: orange;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #c0392b;
+}
+
+/* Data List */
+.data-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.data-list li {
+  background-color: white;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.data-list li p {
+  margin: 8px 0;
+}
+
+.data-list img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .summary {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+
+  .data-list li {
+    text-align: center;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  input[type="text"] {
+    width: 90%;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

@@ -1,88 +1,130 @@
 import { useEffect, useState } from "react";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import Statistics from "./components/Statistics";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
 
 function App() {
-  const [weatherData, setWeatherData] = useState([]);
-  const [filteredResults, setFilteredResults] = useState([]);
+  const [data, setData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [summaryStats, setSummaryStats] = useState({
+    totalItems: 0,
+    avgTemp: 0,
+    maxTemp: 0,
+  });
 
-  // Call the API immediately on mounting to display temperature of current city
+  // Array of cities to fetch data for
+  const cities = ["Raleigh", "New York", "Los Angeles", "Chicago", "Miami"];
+
+  // Fetch data with useEffect for multiple cities
   useEffect(() => {
-    const callAPI = async () => {
-      const response = await fetch(
-        `https://api.weatherbit.io/v2.0/current?city=Raleigh&country=US&key=65c865e3b4b04babac177ed0a366368c&include=minutely`
-      );
-      const json = await response.json();
-      setWeatherData(json.data); // The weather data is in json.data
-      setFilteredResults(json.data); // Initialize filtered results
+    const fetchData = async () => {
+      try {
+        let allData = [];
+
+        // Fetch weather data for each city in the array
+        for (const city of cities) {
+          const response = await fetch(
+            `https://api.weatherbit.io/v2.0/current?city=${city}&country=US&key=65c865e3b4b04babac177ed0a366368c&include=minutely`
+          );
+          const json = await response.json();
+          allData = [...allData, ...json.data]; // Combine city data into a single array
+        }
+
+        setData(allData);
+        setFilteredData(allData); // Initial filtered data is the full dataset
+        calculateSummaryStats(allData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
-    callAPI().catch(console.error);
+    fetchData();
   }, []);
 
-  const setSearchItems = (searchValue) => {
+  // Calculate summary statistics
+  const calculateSummaryStats = (data) => {
+    const totalItems = data.length;
+    const avgTemp = data.reduce((acc, item) => acc + item.temp, 0) / totalItems;
+    const maxTemp = Math.max(...data.map((item) => item.temp));
+    setSummaryStats({ totalItems, avgTemp, maxTemp });
+  };
+
+  // Search data based on city name or weather description
+  const handleSearch = (searchValue) => {
     setSearchInput(searchValue);
     if (searchValue !== "") {
-      // Filter weather data based on multiple attributes
-      const filteredData = weatherData.filter((item) => {
-        return (
+      const filtered = data.filter(
+        (item) =>
           item.city_name.toLowerCase().includes(searchValue.toLowerCase()) ||
-          item.temp.toString().includes(searchValue) ||
           item.weather.description
             .toLowerCase()
             .includes(searchValue.toLowerCase())
-        );
-      });
-      setFilteredResults(filteredData);
+      );
+      setFilteredData(filtered);
     } else {
-      // Reset filtered results when the search input is empty
-      setFilteredResults(weatherData);
+      setFilteredData(data); // Reset if search is cleared
     }
   };
 
+  // Filter by multiple criteria
+  const filterDataByCriteria = (criteria) => {
+    const filtered = data.filter((item) => item.temp > criteria.minTemp);
+    setFilteredData(filtered);
+  };
+
   return (
-    <>
-      <Statistics />
-      <Navbar />
-      <div>
-        <div>
-          <h1>My City Weather</h1>
+    <center>
+      <div className="App">
+        <h1>Weather Data Dashboard</h1>
+
+        {/* Summary Statistics */}
+        <div className="summary">
+          <h2>Summary Statistics</h2>
+          <p>Total items: {summaryStats.totalItems}</p>
+          <p>Average Temperature: {summaryStats.avgTemp.toFixed(2)}°C</p>
+          <p>Max Temperature: {summaryStats.maxTemp}°C</p>
         </div>
+
+        {/* Search Bar */}
         <div>
           <input
             type="text"
-            placeholder="search attribute..."
-            onChange={(inputString) => setSearchItems(inputString.target.value)}
+            placeholder="Search by city or weather..."
+            value={searchInput}
+            onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
+
+        {/* Filters */}
         <div>
+          <button onClick={() => filterDataByCriteria({ minTemp: 20 })}>
+            Filter: Temp &gt; 20°C
+          </button>
+          <button onClick={() => filterDataByCriteria({ minTemp: 30 })}>
+            Filter: Temp &gt; 30°C
+          </button>
+        </div>
+
+        {/* List of Data */}
+        <div className="data-list">
           <ul>
-            {filteredResults.length > 0 ? (
-              filteredResults.map((weather) => (
-                <li key={weather.city_name}>
-                  <p>City: {weather.city_name}</p>
-                  <p>Temperature: {weather.temp}°C</p>
-                  <p>Weather: {weather.weather.description}</p>
-                  <p>Wind Speed: {weather.wind_spd} m/s</p>
-                  <p>Sunrise: {weather.sunrise}</p>
-                  <p>Sunset: {weather.sunset}</p>
-                  {/* Display weather icon */}
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => (
+                <li key={item.city_name}>
+                  <p>City: {item.city_name}</p>
+                  <p>Temperature: {item.temp}°C</p>
+                  <p>Weather: {item.weather.description}</p>
                   <img
-                    src={`https://www.weatherbit.io/static/img/icons/${weather.weather.icon}.png`}
-                    alt={weather.weather.description}
+                    src={`https://www.weatherbit.io/static/img/icons/${item.weather.icon}.png`}
+                    alt={item.weather.description}
                   />
                 </li>
               ))
             ) : (
-              <p>No data available</p>
+              <p>No results found</p>
             )}
           </ul>
         </div>
       </div>
-    </>
+    </center>
   );
 }
 
