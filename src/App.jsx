@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [data, setData] = useState([]);
@@ -72,6 +73,7 @@ function App() {
 
   return (
     <center>
+      <Navbar></Navbar>
       <div className="App">
         <h1>Weather Data Dashboard</h1>
 

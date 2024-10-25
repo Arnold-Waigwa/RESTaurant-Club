@@ -1,10 +1,11 @@
 /* General Styling */
+html,
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
-  padding: 0;
 }
 
 h1 {
@@ -26,9 +27,11 @@ p {
 
 /* Container for the whole app */
 .App {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  /* Remove position and transform styles */
+  margin-top: 70%;
+  text-align: center;
+  padding: 20px; /* Optional: adds padding for better spacing */
+  box-sizing: border-box;
 }
 
 /* Summary Section Styling */
