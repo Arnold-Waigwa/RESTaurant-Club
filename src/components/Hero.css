@@ -1,0 +1,133 @@
+/* General Styling */
+html,
+body {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 20px;
+}
+
+h2 {
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+/* Container for the whole app */
+.App {
+  /* Remove position and transform styles */
+  margin-top: 70%;
+  text-align: center;
+  padding: 20px; /* Optional: adds padding for better spacing */
+  box-sizing: border-box;
+}
+
+/* Summary Section Styling */
+.summary {
+  background-color: #3498db;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary p {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Search Bar */
+input[type="text"] {
+  padding: 10px;
+  width: 300px;
+  border: 2px solid #2ecc71;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: block;
+  margin: 0 auto;
+}
+
+input[type="text"]::placeholder {
+  color: #95a5a6;
+}
+
+/* Filter Buttons */
+button {
+  padding: 10px 20px;
+  background-color: powderblue;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #c0392b;
+}
+
+/* Data List */
+.data-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.data-list li {
+  background-color: seagreen;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.data-list li p {
+  margin: 8px 0;
+}
+
+.data-list img {
+  width: 50px;
+  height: 50px;
+}
+
+.chart-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .summary {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .data-list li {
+    text-align: center;
+  }
+
+  input[type="text"] {
+    width: 90%;
+  }
+}

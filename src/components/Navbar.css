@@ -5,4 +5,22 @@
   bottom: 0;
   background-color: #d2d2d2;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-button {
+  background-color: lightgreen; /* Button color */
+  color: black; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for button size */
+  margin: 0 10px; /* Space between buttons */
+  text-decoration: none; /* Remove underline from links */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.nav-button:hover {
+  background-color: #c0392b; /* Darker color on hover */
 }
